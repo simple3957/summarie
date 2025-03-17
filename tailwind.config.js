@@ -14,4 +14,10 @@ module.exports = {
     },
     plugins: [require("tailwindcss-animate")], // Ensure plugins are loaded
   };
+
+  
+
+
+
+
   
