@@ -19,6 +19,7 @@ export default function HeroSection() {
                             <p className="text-base text-rose-600">Powered by AI</p>
                         </Badge>
                     </div>
+            
                 
                 <h1 className="text-2xl sm:text-2xl lg:text-4xl text-center font-bold py-6 mb-4 ">
                     Transform PDFs into {' '}
