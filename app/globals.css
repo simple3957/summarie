@@ -100,22 +100,22 @@
     flex: 1;
   }
   h1 {
-    @apply text-4xl font-bold text-primary;
+    @apply  font-bold text-primary;
   }
   h2 {
-    @apply text-3xl font-semibold text-secondary;
+    @apply  font-semibold text-secondary;
   }
   h3 {
-    @apply text-2xl font-medium text-accent;
+    @apply  font-medium text-accent;
   }
   h4 {
-    @apply text-xl font-medium text-foreground;
+    @apply  font-medium text-foreground;
   }
   h5 {
-    @apply text-lg font-medium text-muted;
+    @apply font-medium text-muted;
   }
   h6 {
-    @apply text-base font-medium text-muted-foreground;
+    @apply font-medium text-muted-foreground;
   }
   button {
     @apply bg-primary text-primary-foreground border border-border rounded-md;

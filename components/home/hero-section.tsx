@@ -38,7 +38,7 @@ export default function HeroSection() {
                     px-8 sm:px-10 lg:px-12 py-6 sm:py-7 lg:py-8 lg:mt-16
                     bg-linear-to-r from-slate-900  to-rose-500 hover:from-rose-500  hover:to-slate-900 
                     hover:no-underline font-bold shadow-lg transition-all duration-500">
-                        <Link href="/#pricing" className="flex items-center gap-2">
+                        <Link href="#pricing" className="flex items-center gap-2">
                             <span>Try Summaire</span>
                             <ArrowRight className="animate-pulse" />
                         </Link>
