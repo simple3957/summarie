@@ -1,7 +1,7 @@
-import NavLink from '@/components/common/nav-link';
-import { FileText } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import NavLink from "@/components/common/nav-link";
+import { FileText } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function Header() {
   return (
@@ -37,4 +37,4 @@ export default function Header() {
       </div>
     </nav>
   );
-} 
+}
