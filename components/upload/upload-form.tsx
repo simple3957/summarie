@@ -1,5 +1,6 @@
 "use client";
 import UploadFormInput from "@/components/upload/upload-form-input";
+import { generatePdfSummary } from "@/actions/upload-actions";
 import { useUploadThing } from "@/utils/uploadthing";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -18,14 +19,14 @@ export default function UploadForm() {
 
   const { startUpload } = useUploadThing("pdfUploader", {
     onClientUploadComplete: () => {
-      console.log("uploaded successfully!");
+      console.log("Uploaded successfully!");
       toast.success("File uploaded successfully!");
     },
     onUploadError: (err) => {
       console.error("Error occurred while uploading:", err);
       toast.error("Error occurred while uploading.");
     },
-    onUploadBegin: ({ file }) => {
+    onUploadBegin: (file) => {
       console.log("Upload has begun for", file);
       toast.info("Uploading started...");
     },
@@ -33,7 +34,8 @@ export default function UploadForm() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("submitted");
+    console.log("Form submitted");
+
     const formData = new FormData(e.currentTarget);
     const file = formData.get("file") as File;
     const validatedFields = schema.safeParse({ file });
@@ -41,18 +43,31 @@ export default function UploadForm() {
     if (!validatedFields.success) {
       validatedFields.error.errors.forEach((err) => {
         console.error(err.message);
+        toast.error(err.message);
       });
-      toast.error("Invalid file. Please check the errors and try again.");
       return;
     }
 
-    toast("📄Hang in there ! Our AI is reading through your document ✨");
+    toast("📄 Hang in there! Our AI is reading through your document ✨");
 
     // Upload the PDF to UploadThing
     const resp = await startUpload([file]);
-    if (!resp) {
+
+    if (!resp || resp.length === 0) {
       toast.error("Upload failed. Please try again.");
       return;
+    }
+
+    console.log("Upload response:", resp);
+
+    try {
+      // Call generatePdfSummary with the upload response
+      const summary = await generatePdfSummary(resp);
+      console.log("Generated PDF summary:", summary);
+      toast.success("PDF summary generated successfully!");
+    } catch (err) {
+      console.error("Error generating PDF summary:", err);
+      toast.error("Failed to process the PDF. Please try again.");
     }
   };
 
