@@ -1,6 +1,8 @@
 "use server";
 import { fetchAndExtractPdfText } from "@/lib/langchain";
 import { generateSummaryFromOpenAi } from "@/lib/openai";
+import { generateSummaryFromGemini } from "@/lib/gemini";
+
 export async function generatePdfSummary(
   uploadResponse: Array<{
     serverData: {
@@ -42,23 +44,36 @@ export async function generatePdfSummary(
     let summary;
     try {
       summary = await generateSummaryFromOpenAi(pdfText);
-      console.log({ summary });
-    } catch (error) {
-      console.log(error);
+      console.log("OpenAI Summary:", { summary });
+    } catch (openaiError) {
+      console.log("OpenAI Error:", openaiError);
+      try {
+        summary = await generateSummaryFromGemini(pdfText);
+        console.log("Gemini Summary:", { summary });
+      } catch (geminiError) {
+        console.error("Gemini Error:", geminiError);
+        throw new Error("Both OpenAI and Gemini failed to generate summary");
+      }
     }
 
     if (!summary) {
       return {
         success: false,
-        message: "Error processing PDF",
+        message: "Failed to generate summary",
         data: null,
       };
     }
+
+    return {
+      success: true,
+      message: "Summary generated successfully",
+      data: { summary, fileName },
+    };
   } catch (err) {
-    console.error("Error extracting PDF:", err);
+    console.error("Error processing PDF:", err);
     return {
       success: false,
-      message: "Error processing PDF",
+      message: err instanceof Error ? err.message : "Error processing PDF",
       data: null,
     };
   }
