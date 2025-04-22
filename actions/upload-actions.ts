@@ -6,14 +6,12 @@ import { generateSummaryFromOpenAi } from "@/lib/openai";
 import { generateSummaryFromGemini } from "@/lib/gemini";
 import { auth } from "@clerk/nextjs/server";
 
-interface PdfSummaryTypes{
-  {
-    userId:string;
-    fileUrl: string;
-    summary:string; 
-    title:string; 
-    fileName:string;
-  }
+interface PdfSummaryTypes {
+  userId: string;
+  fileUrl: string;
+  summary: string;
+  title: string;
+  fileName: string;
 }
 
 export async function generatePdfSummary(
@@ -146,7 +144,7 @@ export async function storePdfSummaryAction({
       fileName,
     });
 
-    if(!savedSummary){
+    if(savedSummary === undefined){
       return{
         success: false,
         message: 'Failed to save PDF Summary',
